@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>어버이날 감사 봉투</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f7f2ea;
+      --card: #fffaf3;
+      --ink: #2d2924;
+      --muted: #7b7167;
+      --line: #e4d7c7;
+      --gold: #b99767;
+      --gold-dark: #8c6d3f;
+      --rose: #b76e68;
+      --shadow: 0 22px 60px rgba(76, 55, 32, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Noto Sans KR', sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.75), transparent 34%),
+        linear-gradient(145deg, #fbf7f0 0%, var(--bg) 48%, #efe3d4 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 430px;
+    }
+
+    .card {
+      position: relative;
+      min-height: 640px;
+      overflow: hidden;
+      border: 1px solid rgba(185, 151, 103, 0.28);
+      border-radius: 30px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,250,243,0.95)),
+        var(--card);
+      box-shadow: var(--shadow);
+      padding: 34px 28px 28px;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(185, 151, 103, 0.24);
+      border-radius: 24px;
+      pointer-events: none;
+    }
+
+    .screen {
+      position: relative;
+      z-index: 1;
+      min-height: 572px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      animation: fadeUp 520ms ease both;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--gold-dark);
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      font-weight: 600;
+    }
+
+    h1, h2 {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      margin: 0;
+      line-height: 1.38;
+    }
+
+    h1 {
+      font-size: 34px;
+    }
+
+    h2 {
+      font-size: 27px;
+    }
+
+    p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.85;
+      word-break: keep-all;
+    }
+
+    .divider {
+      width: 42px;
+      height: 1px;
+      margin: 28px auto;
+      background: var(--gold);
+      opacity: 0.7;
+    }
+
+    .envelope {
+      width: 210px;
+      height: 138px;
+      position: relative;
+      margin-bottom: 36px;
+      filter: drop-shadow(0 16px 24px rgba(84, 58, 32, 0.14));
+    }
+
+    .envelope .base {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #efe1cf, #fff8ed);
+      border: 1px solid rgba(185, 151, 103, 0.5);
+    }
+
+    .envelope .flap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      margin: auto;
+      border-left: 105px solid transparent;
+      border-right: 105px solid transparent;
+      border-top: 78px solid rgba(219, 198, 169, 0.95);
+    }
+
+    .seal {
+      position: absolute;
+      left: 50%;
+      top: 58%;
+      transform: translate(-50%, -50%);
+      width: 54px;
+      height: 54px;
+      border-radius: 999px;
+      background: linear-gradient(145deg, #c8897e, #a95f59);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff8f3;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 22px;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.35), 0 8px 16px rgba(136, 72, 64, 0.22);
+    }
+
+    .button-area {
+      width: 100%;
+      display: grid;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    button {
+      width: 100%;
+      border: 1px solid rgba(185, 151, 103, 0.48);
+      border-radius: 999px;
+      background: rgba(255, 250, 243, 0.78);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 15px 18px;
+      cursor: pointer;
+      transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      background: #fffdf8;
+      box-shadow: 0 8px 18px rgba(120, 83, 42, 0.12);
+    }
+
+    button.primary {
+      background: linear-gradient(135deg, #b99767, #9e7a48);
+      color: white;
+      border: none;
+      box-shadow: 0 14px 28px rgba(137, 101, 54, 0.22);
+    }
+
+    .choice-grid {
+      width: 100%;
+      display: grid;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .message-box {
+      width: 100%;
+      margin-top: 28px;
+      padding: 26px 22px;
+      border-radius: 22px;
+      border: 1px solid rgba(185, 151, 103, 0.28);
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    .message-box p {
+      margin: 0;
+      color: #50483f;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 18px;
+      line-height: 2;
+    }
+
+    .gift-title {
+      margin-top: 16px;
+      color: var(--gold-dark);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+    }
+
+    .gift-result {
+      margin-top: 14px;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.45;
+      color: var(--ink);
+      word-break: keep-all;
+    }
+
+    .loading-dots {
+      display: inline-flex;
+      gap: 7px;
+      margin-top: 28px;
+    }
+
+    .loading-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: blink 900ms infinite ease-in-out;
+    }
+
+    .loading-dots span:nth-child(2) { animation-delay: 140ms; }
+    .loading-dots span:nth-child(3) { animation-delay: 280ms; }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+      40% { opacity: 1; transform: translateY(-5px); }
+    }
+
+    .footer-note {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .tiny {
+      position: absolute;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      color: rgba(123, 113, 103, 0.6);
+      font-size: 12px;
+    }
+
+    @media (max-width: 390px) {
+      body { padding: 16px; }
+      .card { min-height: 620px; padding: 30px 23px 24px; }
+      .screen { min-height: 556px; }
+      h1 { font-size: 30px; }
+      h2 { font-size: 24px; }
+      p { font-size: 15px; }
+      .gift-result { font-size: 25px; }
+      .envelope { width: 190px; height: 124px; }
+      .envelope .flap {
+        border-left-width: 95px;
+        border-right-width: 95px;
+        border-top-width: 70px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="card">
+      <div class="screen active" id="screen-start">
+        <div class="envelope" aria-hidden="true">
+          <div class="base"></div>
+          <div class="flap"></div>
+          <div class="seal">孝</div>
+        </div>
+        <p class="eyebrow">PARENTS' DAY</p>
+        <h1>어버이날을 맞아<br />작은 마음을 준비했습니다.</h1>
+        <p>봉투를 열어봐 주세요.</p>
+        <div class="button-area">
+          <button class="primary" onclick="goTo('screen-parent')">열어보기</button>
+        </div>
+      </div>
+
+      <div class="screen" id="screen-parent">
+        <p class="eyebrow">LETTER FOR</p>
+        <h2>이 편지는<br />누구에게 전달되었나요?</h2>
+        <p>받으신 분을 선택해 주세요.</p>
+        <div class="choice-grid">
+          <button onclick="selectParent('엄마')">엄마께</button>
+          <button onclick="selectParent('아빠')">아빠께</button>
+        </div>
+      </div>
+
+      <div class="screen" id="screen-wish">
+        <p class="eyebrow">TODAY'S HEART</p>
+        <h2>오늘 가장 받고 싶은<br />마음은 무엇인가요?</h2>
+        <p>마음에 가까운 것을 하나 골라주세요.</p>
+        <div class="choice-grid">
+          <button onclick="selectWish('조용한 휴식')">조용한 휴식</button>
+          <button onclick="selectWish('함께하는 식사')">함께하는 식사</button>
+          <button onclick="selectWish('따뜻한 말')">따뜻한 말</button>
+          <button onclick="selectWish('작은 선물')">작은 선물</button>
+        </div>
+      </div>
+
+      <div class="screen" id="screen-message">
+        <p class="eyebrow">THANK YOU</p>
+        <h2 id="messageTitle">감사한 마음을 담아</h2>
+        <div class="divider"></div>
+        <div class="message-box">
+          <p id="messageText"></p>
+        </div>
+        <div class="button-area">
+          <button class="primary" onclick="goTo('screen-gift')">선물 봉투 보기</button>
+        </div>
+      </div>
+
+      <div class="screen" id="screen-gift">
+        <div class="envelope" aria-hidden="true">
+          <div class="base"></div>
+          <div class="flap"></div>
+          <div class="seal">心</div>
+        </div>
+        <p class="eyebrow">A SMALL GIFT</p>
+        <h2>감사의 마음을 담은<br />작은 선물을 준비했습니다.</h2>
+        <p>봉투를 열어 오늘의 선물을 확인해 주세요.</p>
+        <div class="button-area">
+          <button class="primary" onclick="openGift()">봉투 열기</button>
+        </div>
+      </div>
+
+      <div class="screen" id="screen-loading">
+        <p class="eyebrow">OPENING</p>
+        <h2>선물 봉투를<br />열고 있습니다.</h2>
+        <div class="loading-dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="screen" id="screen-result">
+        <p class="eyebrow">TODAY'S GIFT</p>
+        <h2>어버이날 선물</h2>
+        <div class="divider"></div>
+        <div class="gift-title">감사의 마음을 담아</div>
+        <div class="gift-result" id="giftResult"></div>
+        <p class="footer-note">
+          캡쳐 후 단톡방에 공유해보세요.<br />
+          오늘 바로 선물을 드릴지도 몰라요 😊
+        </p>
+        <div class="button-area">
+          <button onclick="restart()">처음으로 돌아가기</button>
+        </div>
+        <div class="tiny">늘 감사하고 사랑합니다💐♥️</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const state = {
+      parent: '',
+      wish: '',
+      gift: ''
+    };
+
+    const messages = {
+      '엄마': {
+        '조용한 휴식': '늘 가족을 먼저 생각해주신 마음을\n이제는 조금 더 쉬어가며 받으셨으면 해요.\n오늘만큼은 엄마의 시간이 가장 소중하길 바랍니다.',
+        '함께하는 식사': '함께 마주 앉아 먹는 한 끼가\n얼마나 따뜻한 기억이 되는지 알게 되었습니다.\n오늘도 엄마와 좋은 시간을 나누고 싶어요.',
+        '따뜻한 말': '당연하게 받아왔던 다정함이\n사실은 가장 큰 사랑이었다는 걸\n이제야 조금씩 알게 됩니다.',
+        '작은 선물': '크게 표현하지 못한 감사의 마음을\n작은 선물에 담아 전하고 싶었습니다.\n늘 곁에 있어주셔서 고맙습니다.'
+      },
+      '아빠': {
+        '조용한 휴식': '말없이 버텨주신 시간들이\n얼마나 큰 사랑이었는지 알고 있습니다.\n오늘만큼은 아빠도 편히 쉬셨으면 해요.',
+        '함께하는 식사': '함께 밥을 먹는 평범한 시간이\n오래 기억에 남는 선물이라는 걸 느낍니다.\n오늘은 아빠와 따뜻한 시간을 보내고 싶어요.',
+        '따뜻한 말': '자주 표현하지 못했지만\n늘 든든하게 곁에 있어주신 마음을 알고 있습니다.\n아빠, 항상 감사하고 사랑합니다.',
+        '작은 선물': '부족하지만 감사한 마음을 담아\n작은 선물을 준비했습니다.\n늘 묵묵히 함께해주셔서 고맙습니다.'
+      }
+    };
+
+    // 🎁 선물 구성
+// A: 무조건 포함
+const baseGift = "감사의 용돈과";
+
+// B~E: 여기서 하나 랜덤
+const extraGifts = [
+  "부모님의 오붓한 시간 지원권",
+  "삼남매와 카페 데이트권",
+  "삼남매에게 원하는 요리 주문권",
+  "가온이 춤 감상권"
+];
+
+    function goTo(screenId) {
+      document.querySelectorAll('.screen').forEach(screen => {
+        screen.classList.remove('active');
+      });
+      document.getElementById(screenId).classList.add('active');
+    }
+
+    function selectParent(parent) {
+      state.parent = parent;
+      goTo('screen-wish');
+    }
+
+    function selectWish(wish) {
+      state.wish = wish;
+      renderMessage();
+      goTo('screen-message');
+    }
+
+    function renderMessage() {
+      const title = `${state.parent}께 드리는 마음`;
+      const text = messages[state.parent][state.wish];
+
+      document.getElementById('messageTitle').textContent = title;
+      document.getElementById('messageText').textContent = text;
+    }
+
+    function openGift() {
+      goTo('screen-loading');
+
+      setTimeout(() => {
+        const randomExtra = extraGifts[Math.floor(Math.random() * extraGifts.length)];
+state.gift = baseGift + "\n" + randomExtra;
+        document.getElementById('giftResult').textContent = state.gift;
+        goTo('screen-result');
+      }, 1700);
+    }
+
+    function restart() {
+      state.parent = '';
+      state.wish = '';
+      state.gift = '';
+      goTo('screen-start');
+    }
+  </script>
+</body>
+</html>
